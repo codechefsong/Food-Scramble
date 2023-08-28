@@ -30,3 +30,123 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+grid-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.grid-2 {
+  position: absolute;
+  top: 0;
+  left: 90px;
+}
+
+.grid-3 {
+  position: absolute;
+  top: 0;
+  left: 180px;
+}
+
+.grid-4 {
+  position: absolute;
+  top: 0;
+  left: 270px;
+}
+
+.grid-5 {
+  position: absolute;
+  top: 0;
+  left: 360px;
+}
+
+.grid-6 {
+  position: absolute;
+  top: 0;
+  left: 450px;
+}
+
+.grid-7 {
+  position: absolute;
+  top: 90px;
+  left: 450px;
+}
+
+.grid-8 {
+  position: absolute;
+  top: 180px;
+  left: 450px;
+}
+
+.grid-9 {
+  position: absolute;
+  top: 270px;
+  left: 450px;
+}
+
+.grid-10 {
+  position: absolute;
+  top: 360px;
+  left: 450px;
+}
+
+.grid-11 {
+  position: absolute;
+  top: 450px;
+  left: 450px;
+}
+
+.grid-12 {
+  position: absolute;
+  top: 450px;
+  left: 360px;
+}
+
+.grid-13 {
+  position: absolute;
+  top: 450px;
+  left: 270px;
+}
+
+.grid-14 {
+  position: absolute;
+  top: 450px;
+  left: 180px;
+}
+
+.grid-15 {
+  position: absolute;
+  top: 450px;
+  left: 90px;
+}
+
+.grid-16 {
+  position: absolute;
+  top: 450px;
+  left: 0;
+}
+
+.grid-17 {
+  position: absolute;
+  top: 360px;
+  left: 0;
+}
+
+.grid-18 {
+  position: absolute;
+  top: 270px;
+  left: 0;
+}
+
+.grid-19 {
+  position: absolute;
+  top: 180px;
+  left: 0;
+}
+
+.grid-20 {
+  position: absolute;
+  top: 90px;
+  left: 0;
+}
