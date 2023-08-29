@@ -44,7 +44,18 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
 
   // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
+  const registryContract = await hre.ethers.getContract("ERC6551Registry", deployer);
+
+  await deploy("FoodScramble", {
+    from: deployer,
+    args: [deployer, registryContract.address],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
+  
 };
 
 export default deployYourContract;

@@ -1,17 +1,25 @@
 import { BOARD_STYLES } from "./style";
-import { useAccount } from "wagmi";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { useAccount, useNetwork } from "wagmi";
+import deployedContracts from "~~/generated/deployedContracts";
+import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export const Board = () => {
   const { address } = useAccount();
+  const { chain } = useNetwork();
+
+  const { data: tbaAddress } = useScaffoldContractRead({
+    contractName: "FoodScramble",
+    functionName: "tbaList",
+    args: [address],
+  });
 
   const { writeAsync: createAccount } = useScaffoldContractWrite({
-    contractName: "ERC6551Registry",
-    functionName: "createAccount",
+    contractName: "FoodScramble",
+    functionName: "createTokenBoundAccount",
     args: [
-      "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      deployedContracts[chain?.id][0].contracts.ERC6551Account.address,
       BigInt("1"),
-      "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      deployedContracts[chain?.id][0].contracts.FoodNFT.address,
       BigInt("0"),
       BigInt("1"),
       "0x",
@@ -29,11 +37,12 @@ export const Board = () => {
           <div>
             <h2 className="mt-4 text-3xl">Board</h2>
             <p>{address}</p>
+            <p>{tbaAddress}</p>
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
               onClick={() => createAccount()}
             >
-              Play
+              Create
             </button>
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
