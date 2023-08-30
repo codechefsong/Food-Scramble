@@ -1,11 +1,12 @@
 import { BOARD_STYLES } from "./style";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount } from "wagmi";
 import deployedContracts from "~~/generated/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
+const CHAIN_ID = 31337;
+
 export const Board = () => {
   const { address } = useAccount();
-  const { chain } = useNetwork();
 
   const { data: tbaAddress } = useScaffoldContractRead({
     contractName: "FoodScramble",
@@ -28,9 +29,9 @@ export const Board = () => {
     contractName: "FoodScramble",
     functionName: "createTokenBoundAccount",
     args: [
-      deployedContracts[chain?.id][0].contracts.ERC6551Account.address,
+      deployedContracts[CHAIN_ID][0].contracts.ERC6551Account.address,
       BigInt("1"),
-      deployedContracts[chain?.id][0].contracts.FoodNFT.address,
+      deployedContracts[CHAIN_ID][0].contracts.FoodNFT.address,
       BigInt("0"),
       BigInt("1"),
       "0x",
