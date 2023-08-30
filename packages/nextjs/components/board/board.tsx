@@ -21,7 +21,7 @@ export const Board = () => {
   const { data: you } = useScaffoldContractRead({
     contractName: "FoodScramble",
     functionName: "player",
-    args: [address],
+    args: [tbaAddress],
   });
 
   const { writeAsync: createAccount } = useScaffoldContractWrite({

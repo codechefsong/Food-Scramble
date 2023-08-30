@@ -1,9 +1,11 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 import "./ERC6551Registry.sol";
+import "./CoinToken.sol";
 
 contract FoodScramble {
   ERC6551Registry public registry;
+  CoinToken public coin;
 
   address public immutable owner;
   Box[] public grid;
@@ -18,9 +20,10 @@ contract FoodScramble {
 
   event RollResult(address player, uint256 num);
 
-  constructor(address _owner, address _registryAddress) {
+  constructor(address _owner, address _registryAddress, address _tokenAddress) {
     owner = _owner;
     registry = ERC6551Registry(_registryAddress);
+    coin = CoinToken(_tokenAddress);
 
     for (uint256 id = 0; id < 20; id++) {
       grid.push(Box(id, "empty", 0));
@@ -43,22 +46,24 @@ contract FoodScramble {
     tbaList[msg.sender] = newTBA;
 
     grid[0].numberOfPlayers += 1;
+    coin.mint(newTBA, 100 * 10 ** 18);
   }
 
   function movePlayer() public {
-    grid[player[msg.sender]].numberOfPlayers -= 1;
-    uint256 randomNumber = uint256(keccak256(abi.encode(block.timestamp, msg.sender))) % 5;
-    player[msg.sender] += randomNumber + 1;
+    address tba = tbaList[msg.sender];
+    grid[player[tba]].numberOfPlayers -= 1;
+    uint256 randomNumber = uint256(keccak256(abi.encode(block.timestamp, tba))) % 5;
+    player[tba] += randomNumber + 1;
 
-    if (player[msg.sender] >= 20) {
-      player[msg.sender] = 0;
+    if (player[tba] >= 20) {
+      player[tba] = 0;
       grid[0].numberOfPlayers += 1;
     }
     else {
-      grid[player[msg.sender]].numberOfPlayers += 1;
+      grid[player[tba]].numberOfPlayers += 1;
     }
 
-    emit RollResult(msg.sender, randomNumber);
+    emit RollResult(tba, randomNumber);
   }
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed
