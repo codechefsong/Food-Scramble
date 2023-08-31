@@ -2,10 +2,12 @@
 pragma solidity >=0.8.0 <0.9.0;
 import "./ERC6551Registry.sol";
 import "./CoinToken.sol";
+import "./Ingredient.sol";
 
 contract FoodScramble {
   ERC6551Registry public registry;
   CoinToken public coin;
+  Ingredient public ingredient;
 
   address public immutable owner;
   Box[] public grid;
@@ -15,18 +17,32 @@ contract FoodScramble {
   struct Box {
     uint256 id;
     string typeGrid;
+    uint256 ingredientType;
     uint256 numberOfPlayers;
   }
 
   event RollResult(address player, uint256 num);
 
-  constructor(address _owner, address _registryAddress, address _tokenAddress) {
+  constructor(address _owner, address _registryAddress, address _tokenAddress, address _ingredientAddress) {
     owner = _owner;
     registry = ERC6551Registry(_registryAddress);
     coin = CoinToken(_tokenAddress);
+    ingredient = Ingredient(_ingredientAddress);
 
-    for (uint256 id = 0; id < 20; id++) {
-      grid.push(Box(id, "empty", 0));
+    for (uint256 id = 0; id < 5; id++) {
+      grid.push(Box(id, "Bread", 0, 0));
+    }
+
+    for (uint256 id = 5; id < 10; id++) {
+      grid.push(Box(id, "Meat", 1, 0));
+    }
+
+    for (uint256 id = 10; id < 15; id++) {
+      grid.push(Box(id, "Lettuce", 2, 0));
+    }
+
+    for (uint256 id = 15; id < 20; id++) {
+      grid.push(Box(id, "Tomato", 3, 0));
     }
   }
 
@@ -64,6 +80,11 @@ contract FoodScramble {
     }
 
     emit RollResult(tba, randomNumber);
+  }
+
+  function buyIngredient() public {
+    address tba = tbaList[msg.sender];
+    ingredient.mintIngredient(tba, grid[player[tba]].ingredientType);
   }
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed

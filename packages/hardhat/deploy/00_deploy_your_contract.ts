@@ -23,11 +23,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   await deploy("FoodNFT", {
     from: deployer,
-    // Contract constructor arguments
-    // args: [deployer],
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
@@ -49,20 +45,23 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
-  // Get the deployed contract
-  const registryContract = await hre.ethers.getContract("ERC6551Registry", deployer);
-  const coinContract = await hre.ethers.getContract("CoinToken", deployer);
-
-  await deploy("FoodScramble", {
+  await deploy("Ingredient", {
     from: deployer,
-    args: [deployer, registryContract.address, coinContract.address],
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
-  
+  // Get the deployed contract
+  const registryContract = await hre.ethers.getContract("ERC6551Registry", deployer);
+  const coinContract = await hre.ethers.getContract("CoinToken", deployer);
+  const ingredientContract = await hre.ethers.getContract("Ingredient", deployer);
+
+  await deploy("FoodScramble", {
+    from: deployer,
+    args: [deployer, registryContract.address, coinContract.address, ingredientContract.address],
+    log: true,
+    autoMine: true,
+  });
 };
 
 export default deployYourContract;
