@@ -1,13 +1,17 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 import "./ERC6551Registry.sol";
+import "./BreadToken.sol";
+import "./MeatToken.sol";
+import "./LettuceToken.sol";
 import "./CoinToken.sol";
-import "./Ingredient.sol";
 
 contract FoodScramble {
   ERC6551Registry public registry;
-  CoinToken public coin;
-  Ingredient public ingredient;
+  BreadToken public bread;
+  MeatToken public meat;
+  LettuceToken public lettuce;
+  CoinToken public tomato;
 
   address public immutable owner;
   Box[] public grid;
@@ -23,11 +27,13 @@ contract FoodScramble {
 
   event RollResult(address player, uint256 num);
 
-  constructor(address _owner, address _registryAddress, address _tokenAddress, address _ingredientAddress) {
+  constructor(address _owner, address _registryAddress, address _breadAddress, address _meatAddress, address _lettuceAddress, address _tomatoAddress) {
     owner = _owner;
     registry = ERC6551Registry(_registryAddress);
-    coin = CoinToken(_tokenAddress);
-    ingredient = Ingredient(_ingredientAddress);
+    bread = BreadToken(_breadAddress);
+    meat = MeatToken(_meatAddress);
+    lettuce = LettuceToken(_lettuceAddress);
+    tomato = CoinToken(_tomatoAddress);
 
     for (uint256 id = 0; id < 5; id++) {
       grid.push(Box(id, "Bread", 0, 0));
@@ -62,7 +68,6 @@ contract FoodScramble {
     tbaList[msg.sender] = newTBA;
 
     grid[0].numberOfPlayers += 1;
-    coin.mint(newTBA, 100 * 10 ** 18);
   }
 
   function movePlayer() public {
@@ -84,7 +89,10 @@ contract FoodScramble {
 
   function buyIngredient() public {
     address tba = tbaList[msg.sender];
-    ingredient.mintIngredient(tba, grid[player[tba]].ingredientType);
+    bread.mint(tba, 1 * 10 ** 18);
+    meat.mint(tba, 1 * 10 ** 18);
+    lettuce.mint(tba, 1 * 10 ** 18);
+    tomato.mint(tba, 1 * 10 ** 18);
   }
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed

@@ -39,26 +39,45 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
+  // await deploy("Ingredient", {
+  //   from: deployer,
+  //   log: true,
+  //   autoMine: true,
+  // });
+
+  const registryContract = await hre.ethers.getContract("ERC6551Registry", deployer);
+
+  await deploy("BreadToken", {
+    from: deployer,
+    log: true,
+    autoMine: true,
+  });
+  const BreadContract = await hre.ethers.getContract("BreadToken", deployer);
+
+  await deploy("MeatToken", {
+    from: deployer,
+    log: true,
+    autoMine: true,
+  });
+  const MeatContract = await hre.ethers.getContract("MeatToken", deployer);
+
+  await deploy("LettuceToken", {
+    from: deployer,
+    log: true,
+    autoMine: true,
+  });
+  const LettuceContract = await hre.ethers.getContract("LettuceToken", deployer);
+
   await deploy("CoinToken", {
     from: deployer,
     log: true,
     autoMine: true,
   });
-
-  await deploy("Ingredient", {
-    from: deployer,
-    log: true,
-    autoMine: true,
-  });
-
-  // Get the deployed contract
-  const registryContract = await hre.ethers.getContract("ERC6551Registry", deployer);
-  const coinContract = await hre.ethers.getContract("CoinToken", deployer);
-  const ingredientContract = await hre.ethers.getContract("Ingredient", deployer);
+  const CoinContract = await hre.ethers.getContract("CoinToken", deployer);
 
   await deploy("FoodScramble", {
     from: deployer,
-    args: [deployer, registryContract.address, coinContract.address, ingredientContract.address],
+    args: [deployer, registryContract.address, BreadContract.address, MeatContract.address, LettuceContract.address, CoinContract.address],
     log: true,
     autoMine: true,
   });
