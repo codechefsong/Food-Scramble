@@ -25,6 +25,30 @@ export const Board = () => {
     args: [tbaAddress],
   });
 
+  const { data: breadAmount } = useScaffoldContractRead({
+    contractName: "BreadToken",
+    functionName: "balanceOf",
+    args: [tbaAddress],
+  });
+
+  const { data: meatAmount } = useScaffoldContractRead({
+    contractName: "MeatToken",
+    functionName: "balanceOf",
+    args: [tbaAddress],
+  });
+
+  const { data: lettuceAmount } = useScaffoldContractRead({
+    contractName: "LettuceToken",
+    functionName: "balanceOf",
+    args: [tbaAddress],
+  });
+
+  const { data: tomatoAmount } = useScaffoldContractRead({
+    contractName: "CoinToken",
+    functionName: "balanceOf",
+    args: [tbaAddress],
+  });
+
   const { writeAsync: createAccount } = useScaffoldContractWrite({
     contractName: "FoodScramble",
     functionName: "createTokenBoundAccount",
@@ -61,9 +85,8 @@ export const Board = () => {
   return (
     <div className="mt-5">
       <div>
-        <div className="flex">
+        <div className="grid lg:grid-cols-2 gap-8 flex-grow">
           <div>
-            <h2 className="mt-4 text-3xl">Board</h2>
             <p>{address}</p>
             <p>{tbaAddress}</p>
             <button
@@ -72,32 +95,39 @@ export const Board = () => {
             >
               Create
             </button>
+            <br />
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
               onClick={() => roll()}
             >
               Roll
             </button>
+            <br />
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
               onClick={() => buy()}
             >
               Buy
             </button>
-            <div className="relative mt-3" style={{ width: "450px", height: "600px" }}>
-              {gridData &&
-                gridData.map((item, index) => (
-                  <div
-                    key={index}
-                    className={
-                      "w-20 h-20 border border-gray-300 font-bold bg-white" + " " + BOARD_STYLES[index] || "grid-1"
-                    }
-                  >
-                    {item.typeGrid}
-                    {you?.toString() === item.id.toString() && <p className="my-0">You</p>}
-                  </div>
-                ))}
-            </div>
+            <h2 className="mt-4 text-3xl">Your bags</h2>
+            <p>{(breadAmount?.toString() as any) / 10 ** 18} Bread</p>
+            <p>{(meatAmount?.toString() as any) / 10 ** 18} Meat</p>
+            <p>{(lettuceAmount?.toString() as any) / 10 ** 18} Lettuce</p>
+            <p>{(tomatoAmount?.toString() as any) / 10 ** 18} Tomato</p>
+          </div>
+          <div className="relative mt-3" style={{ width: "450px", height: "600px" }}>
+            {gridData &&
+              gridData.map((item, index) => (
+                <div
+                  key={index}
+                  className={
+                    "w-20 h-20 border border-gray-300 font-bold bg-white" + " " + BOARD_STYLES[index] || "grid-1"
+                  }
+                >
+                  {item.typeGrid}
+                  {you?.toString() === item.id.toString() && <p className="my-0">You</p>}
+                </div>
+              ))}
           </div>
         </div>
       </div>

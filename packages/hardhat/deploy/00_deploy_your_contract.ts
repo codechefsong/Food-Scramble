@@ -77,7 +77,14 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   await deploy("FoodScramble", {
     from: deployer,
-    args: [deployer, registryContract.address, BreadContract.address, MeatContract.address, LettuceContract.address, CoinContract.address],
+    args: [
+      deployer,
+      registryContract.address,
+      BreadContract.address,
+      MeatContract.address,
+      LettuceContract.address,
+      CoinContract.address,
+    ],
     log: true,
     autoMine: true,
   });
