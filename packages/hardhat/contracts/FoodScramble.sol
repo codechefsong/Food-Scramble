@@ -89,10 +89,12 @@ contract FoodScramble {
 
   function buyIngredient() public {
     address tba = tbaList[msg.sender];
-    bread.mint(tba, 1 * 10 ** 18);
-    meat.mint(tba, 1 * 10 ** 18);
-    lettuce.mint(tba, 1 * 10 ** 18);
-    tomato.mint(tba, 1 * 10 ** 18);
+    Box memory currentSpot = grid[player[tba]];
+
+    if (currentSpot.ingredientType == 0) bread.mint(tba, 1 * 10 ** 18);
+    else if (currentSpot.ingredientType == 1) meat.mint(tba, 1 * 10 ** 18);
+    else if (currentSpot.ingredientType == 2)lettuce.mint(tba, 1 * 10 ** 18);
+    else if (currentSpot.ingredientType == 3)tomato.mint(tba, 1 * 10 ** 18);
   }
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed
