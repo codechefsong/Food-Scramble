@@ -17,6 +17,7 @@ contract FoodScramble {
   Box[] public grid;
   mapping(address => address) public tbaList;
   mapping(address => uint256) public player;
+  mapping(address => bool) public canBuy;
   
   struct Box {
     uint256 id;
@@ -84,17 +85,24 @@ contract FoodScramble {
       grid[player[tba]].numberOfPlayers += 1;
     }
 
+    if (grid[player[tba]].ingredientType <= 3) {
+      canBuy[tba] = true;
+    }
+
     emit RollResult(tba, randomNumber);
   }
 
   function buyIngredient() public {
     address tba = tbaList[msg.sender];
+    require(canBuy[tba], "You already brought this ingredient");
     Box memory currentSpot = grid[player[tba]];
 
     if (currentSpot.ingredientType == 0) bread.mint(tba, 1 * 10 ** 18);
     else if (currentSpot.ingredientType == 1) meat.mint(tba, 1 * 10 ** 18);
     else if (currentSpot.ingredientType == 2)lettuce.mint(tba, 1 * 10 ** 18);
     else if (currentSpot.ingredientType == 3)tomato.mint(tba, 1 * 10 ** 18);
+
+    canBuy[tba] = false;
   }
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed

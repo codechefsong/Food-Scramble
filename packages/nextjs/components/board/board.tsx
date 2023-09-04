@@ -22,6 +22,12 @@ export const Board = () => {
     args: [tbaAddress],
   });
 
+  const { data: canBuy } = useScaffoldContractRead({
+    contractName: "FoodScramble",
+    functionName: "canBuy",
+    args: [tbaAddress],
+  });
+
   const { data: breadAmount } = useScaffoldContractRead({
     contractName: "BreadToken",
     functionName: "balanceOf",
@@ -76,12 +82,14 @@ export const Board = () => {
               Roll
             </button>
             <br />
-            <button
-              className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-              onClick={() => buy()}
-            >
-              Buy
-            </button>
+            {canBuy && (
+              <button
+                className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+                onClick={() => buy()}
+              >
+                Buy
+              </button>
+            )}
             <h2 className="mt-4 text-3xl">Your bags</h2>
             <p>{(breadAmount?.toString() as any) / 10 ** 18} Bread</p>
             <p>{(meatAmount?.toString() as any) / 10 ** 18} Meat</p>
