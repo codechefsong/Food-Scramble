@@ -36,7 +36,9 @@ contract FoodScramble {
     lettuce = LettuceToken(_lettuceAddress);
     tomato = CoinToken(_tomatoAddress);
 
-    for (uint256 id = 0; id < 5; id++) {
+    grid.push(Box(0, "Home", 99, 0));
+
+    for (uint256 id = 1; id < 5; id++) {
       grid.push(Box(id, "Bread", 0, 0));
     }
 

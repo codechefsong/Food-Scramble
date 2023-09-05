@@ -66,6 +66,7 @@ const Marketplace: NextPage = () => {
         <button
           className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
           onClick={() => createAccount()}
+          disabled={nfts?.length === 0 || selectedNFT === -1}
         >
           Create Token Bound Account
         </button>
