@@ -65,6 +65,7 @@ grid-1 {
   position: absolute;
   top: 0;
   left: 450px;
+  z-index: 0 !important;
 }
 
 .grid-7 {
@@ -125,6 +126,7 @@ grid-1 {
   position: absolute;
   top: 450px;
   left: 0;
+  z-index: 0 !important;
 }
 
 .grid-17 {
@@ -149,4 +151,11 @@ grid-1 {
   position: absolute;
   top: 90px;
   left: 0;
+}
+
+.track {
+  position: absolute;
+  top: -36px;
+  right: 168px;
+  transform: rotate(45deg);
 }

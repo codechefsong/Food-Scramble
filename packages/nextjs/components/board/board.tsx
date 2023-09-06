@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BOARD_STYLES } from "./style";
 import { useAccount } from "wagmi";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
@@ -68,6 +69,14 @@ export const Board = () => {
     },
   });
 
+  const { writeAsync: travelRail } = useScaffoldContractWrite({
+    contractName: "FoodScramble",
+    functionName: "travelRail",
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
+
   const { writeAsync: cookFood } = useScaffoldContractWrite({
     contractName: "FoodScramble",
     functionName: "mintFoodNFT",
@@ -101,6 +110,13 @@ export const Board = () => {
             <br />
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+              onClick={() => travelRail()}
+            >
+              Use Rail
+            </button>
+            <br />
+            <button
+              className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
               onClick={() => cookFood()}
             >
               Cook
@@ -118,13 +134,14 @@ export const Board = () => {
                 <div
                   key={index}
                   className={
-                    "w-20 h-20 border border-gray-300 font-bold bg-white" + " " + BOARD_STYLES[index] || "grid-1"
+                    "w-20 h-20 border border-gray-300 font-bold bg-white z-30" + " " + BOARD_STYLES[index] || "grid-1"
                   }
                 >
                   {item.typeGrid}
                   {you?.toString() === item.id.toString() && <p className="my-0">You</p>}
                 </div>
               ))}
+            <Image className="track" src="/assets/track.png" width={45} height={200} alt="Track" />
           </div>
         </div>
       </div>

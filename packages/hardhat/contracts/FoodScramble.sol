@@ -45,7 +45,9 @@ contract FoodScramble {
       grid.push(Box(id, "Bread", 0, 0));
     }
 
-    for (uint256 id = 5; id < 10; id++) {
+    grid.push(Box(5, "Rail", 98, 0));
+
+    for (uint256 id = 6; id < 10; id++) {
       grid.push(Box(id, "Meat", 1, 0));
     }
 
@@ -53,7 +55,9 @@ contract FoodScramble {
       grid.push(Box(id, "Lettuce", 2, 0));
     }
 
-    for (uint256 id = 15; id < 20; id++) {
+    grid.push(Box(15, "Rail", 98, 0));
+
+    for (uint256 id = 16; id < 20; id++) {
       grid.push(Box(id, "Tomato", 3, 0));
     }
   }
@@ -119,6 +123,23 @@ contract FoodScramble {
     tomato.mint(tba, 1 * 10 ** 18);
 
     canBuy[tba] = false;
+  }
+
+  function travelRail() public {
+    address tba = tbaList[msg.sender];
+    Box memory currentSpot = grid[player[tba]];
+    require(currentSpot.ingredientType == 98, "You cannot use this rail");
+
+    grid[player[tba]].numberOfPlayers -= 1;
+
+    if (player[tba] == 5) {
+      player[tba] = 15;
+      grid[15].numberOfPlayers += 1;
+    }
+    else {
+      player[tba] = 5;
+      grid[5].numberOfPlayers += 1;
+    }
   }
 
   function mintFoodNFT() public {
