@@ -17,9 +17,15 @@ const Marketplace: NextPage = () => {
     args: [address],
   });
 
+  const { data: foodNfts } = useScaffoldContractRead({
+    contractName: "FoodScramble",
+    functionName: "getMyFoods",
+    args: [address],
+  });
+
   const { writeAsync: mintNFT } = useScaffoldContractWrite({
     contractName: "FoodNFT",
-    functionName: "mint",
+    functionName: "mintChef",
     args: [address, "URL"],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
@@ -70,6 +76,22 @@ const Marketplace: NextPage = () => {
         >
           Create Token Bound Account
         </button>
+        <h1 className="text-center mb-5">
+          <span className="block text-3xl mb-2">Your Food NFTs</span>
+        </h1>
+
+        <div className="flex">
+          {foodNfts?.map((n, index) => (
+            <div
+              key={index}
+              className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
+              style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
+              onClick={() => setSelectNFT(index)}
+            >
+              {n.toString()}
+            </div>
+          ))}
+        </div>
         <h1 className="text-center mb-5">
           <span className="block text-2xl mb-2">Buy a NFT</span>
         </h1>

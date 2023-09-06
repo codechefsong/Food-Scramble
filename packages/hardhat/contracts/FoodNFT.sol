@@ -9,10 +9,11 @@ contract FoodNFT is ERC721URIStorage {
   Counters.Counter private _tokenIds;
 
   mapping(address => uint256[]) public mynfts;
+  mapping(address => uint256[]) public myFoods;
 
   constructor() ERC721("Food Scramble NFT", "FSN") {}
 
-  function mint(address _to, string memory _tokenURI_) public returns (uint256) {
+  function mintChef(address _to, string memory _tokenURI_) public returns (uint256) {
     uint256 newItemId = _tokenIds.current();
     _mint(_to, newItemId);
     _setTokenURI(newItemId, _tokenURI_);
@@ -22,7 +23,21 @@ contract FoodNFT is ERC721URIStorage {
     return newItemId;
   }
 
+  function mintFood(address _to, string memory _tokenURI_) public returns (uint256) {
+    uint256 newItemId = _tokenIds.current();
+    _mint(_to, newItemId);
+    _setTokenURI(newItemId, _tokenURI_);
+
+    _tokenIds.increment();
+    myFoods[_to].push(newItemId);
+    return newItemId;
+  }
+
   function getMyNFTs(address _owner) public view returns (uint256[] memory){
     return mynfts[_owner];
+  }
+
+  function getMyFoods(address _owner) public view returns (uint256[] memory){
+    return myFoods[_owner];
   }
 }

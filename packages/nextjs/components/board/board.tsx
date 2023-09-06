@@ -68,6 +68,14 @@ export const Board = () => {
     },
   });
 
+  const { writeAsync: cookFood } = useScaffoldContractWrite({
+    contractName: "FoodScramble",
+    functionName: "mintFoodNFT",
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
+
   return (
     <div className="mt-5">
       <div>
@@ -90,6 +98,14 @@ export const Board = () => {
                 Buy
               </button>
             )}
+            <br />
+            <button
+              className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+              onClick={() => cookFood()}
+            >
+              Cook
+            </button>
+
             <h2 className="mt-4 text-3xl">Your bags</h2>
             <p>{(breadAmount?.toString() as any) / 10 ** 18} Bread</p>
             <p>{(meatAmount?.toString() as any) / 10 ** 18} Meat</p>

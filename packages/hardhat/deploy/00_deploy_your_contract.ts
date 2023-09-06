@@ -27,6 +27,8 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
+  const foodNFTContract = await hre.ethers.getContract("FoodNFT", deployer);
+
   await deploy("ERC6551Registry", {
     from: deployer,
     log: true,
@@ -84,6 +86,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       MeatContract.address,
       LettuceContract.address,
       CoinContract.address,
+      foodNFTContract.address,
     ],
     log: true,
     autoMine: true,

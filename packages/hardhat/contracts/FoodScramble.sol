@@ -5,6 +5,7 @@ import "./BreadToken.sol";
 import "./MeatToken.sol";
 import "./LettuceToken.sol";
 import "./CoinToken.sol";
+import "./FoodNFT.sol";
 
 contract FoodScramble {
   ERC6551Registry public registry;
@@ -12,6 +13,7 @@ contract FoodScramble {
   MeatToken public meat;
   LettuceToken public lettuce;
   CoinToken public tomato;
+  FoodNFT public hamburger;
 
   address public immutable owner;
   Box[] public grid;
@@ -28,13 +30,14 @@ contract FoodScramble {
 
   event RollResult(address player, uint256 num);
 
-  constructor(address _owner, address _registryAddress, address _breadAddress, address _meatAddress, address _lettuceAddress, address _tomatoAddress) {
+  constructor(address _owner, address _registryAddress, address _breadAddress, address _meatAddress, address _lettuceAddress, address _tomatoAddress, address _hamburgerAddress) {
     owner = _owner;
     registry = ERC6551Registry(_registryAddress);
     bread = BreadToken(_breadAddress);
     meat = MeatToken(_meatAddress);
     lettuce = LettuceToken(_lettuceAddress);
     tomato = CoinToken(_tomatoAddress);
+    hamburger = FoodNFT(_hamburgerAddress);
 
     grid.push(Box(0, "Home", 99, 0));
 
@@ -57,6 +60,11 @@ contract FoodScramble {
 
   function getGrid() public view returns (Box[] memory){
     return grid;
+  }
+
+  function getMyFoods(address _owner) public view returns (uint256[] memory){
+    address tba = tbaList[_owner];
+    return hamburger.getMyFoods(tba);
   }
 
   function createTokenBoundAccount(
@@ -104,7 +112,28 @@ contract FoodScramble {
     else if (currentSpot.ingredientType == 2)lettuce.mint(tba, 1 * 10 ** 18);
     else if (currentSpot.ingredientType == 3)tomato.mint(tba, 1 * 10 ** 18);
 
+    // for testing
+    bread.mint(tba, 1 * 10 ** 18);
+    meat.mint(tba, 1 * 10 ** 18);
+    lettuce.mint(tba, 1 * 10 ** 18);
+    tomato.mint(tba, 1 * 10 ** 18);
+
     canBuy[tba] = false;
+  }
+
+  function mintFoodNFT() public {
+    address tba = tbaList[msg.sender];
+    // require(bread.balanceOf[tba] > 0, "You need more bread");
+    // require(meat.balanceOf[tba] > 0, "You need more meat");
+    // require(lettuce.balanceOf[tba] > 0, "You need more lettuce");
+    // require(tomato.balanceOf[tba] > 0, "You need more tomato");
+
+    bread.burn(tba, 1 * 10 ** 18);
+    meat.burn(tba, 1 * 10 ** 18);
+    lettuce.burn(tba, 1 * 10 ** 18);
+    tomato.burn(tba, 1 * 10 ** 18);
+
+    hamburger.mintFood(tba, "h");
   }
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed
