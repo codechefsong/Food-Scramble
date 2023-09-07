@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { MetaHeader } from "~~/components/MetaHeader";
@@ -70,11 +71,11 @@ const Marketplace: NextPage = () => {
             {nfts?.map((n, index) => (
               <div
                 key={index}
-                className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
+                className="w-20 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
                 style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
                 onClick={() => setSelectNFT(index)}
               >
-                {n.toString()}
+                <Image className="" src="/assets/chef.png" width={50} height={50} alt="Chef" />
               </div>
             ))}
           </div>
@@ -94,11 +95,9 @@ const Marketplace: NextPage = () => {
             {foodNfts?.map((n, index) => (
               <div
                 key={index}
-                className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
-                style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
-                onClick={() => setSelectNFT(index)}
+                className="w-20 h-20 border border-gray-30 flex items-center justify-center font-bold bg-white mr-2 mb-2"
               >
-                {n.toString()}
+                <Image className="" src="/assets/hamburger.png" width={70} height={70} alt="Hamburger" />
               </div>
             ))}
           </div>

@@ -159,3 +159,10 @@ grid-1 {
   right: 246px;
   transform: rotate(45deg);
 }
+
+.chef {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+}

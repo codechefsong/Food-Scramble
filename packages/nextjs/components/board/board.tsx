@@ -134,11 +134,14 @@ export const Board = () => {
                 <div
                   key={index}
                   className={
-                    "w-20 h-20 border border-gray-300 font-bold bg-white z-30" + " " + BOARD_STYLES[index] || "grid-1"
+                    "w-20 h-20 border border-gray-300 font-bold bg-stone-200 z-10" + " " + BOARD_STYLES[index] ||
+                    "grid-1"
                   }
                 >
                   {item.typeGrid}
-                  {you?.toString() === item.id.toString() && <p className="my-0">You</p>}
+                  {you?.toString() === item.id.toString() && (
+                    <Image className="chef" src="/assets/chef.png" width={40} height={40} alt="Chef" />
+                  )}
                 </div>
               ))}
             <Image className="track" src="/assets/track.png" width={45} height={200} alt="Track" />
