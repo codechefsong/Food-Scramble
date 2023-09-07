@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
+import { MetaHeader } from "~~/components/MetaHeader";
 import deployedContracts from "~~/generated/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
@@ -50,60 +51,70 @@ const Marketplace: NextPage = () => {
   });
 
   return (
-    <div className="flex items-center flex-col flex-grow pt-7">
-      <div className="px-5">
-        <h1 className="text-center mb-5">
-          <span className="block text-3xl mb-2">Select your NFTs</span>
-        </h1>
+    <>
+      <MetaHeader
+        title="Marketplace"
+        description="Marketplace created with 🏗 Scaffold-ETH 2, showcasing some of its features."
+      >
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
+      </MetaHeader>
 
-        <div className="flex">
-          {nfts?.map((n, index) => (
-            <div
-              key={index}
-              className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
-              style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
-              onClick={() => setSelectNFT(index)}
-            >
-              {n.toString()}
-            </div>
-          ))}
+      <div className="flex items-center flex-col flex-grow pt-7">
+        <div className="px-5">
+          <h1 className="text-center mb-5">
+            <span className="block text-3xl mb-2">Select your NFTs</span>
+          </h1>
+
+          <div className="flex">
+            {nfts?.map((n, index) => (
+              <div
+                key={index}
+                className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
+                style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
+                onClick={() => setSelectNFT(index)}
+              >
+                {n.toString()}
+              </div>
+            ))}
+          </div>
+
+          <button
+            className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+            onClick={() => createAccount()}
+            disabled={nfts?.length === 0 || selectedNFT === -1}
+          >
+            Create Token Bound Account
+          </button>
+          <h1 className="text-center mb-5">
+            <span className="block text-3xl mb-2">Your Food NFTs</span>
+          </h1>
+
+          <div className="flex">
+            {foodNfts?.map((n, index) => (
+              <div
+                key={index}
+                className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
+                style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
+                onClick={() => setSelectNFT(index)}
+              >
+                {n.toString()}
+              </div>
+            ))}
+          </div>
+          <h1 className="text-center mb-5">
+            <span className="block text-2xl mb-2">Buy a NFT</span>
+          </h1>
+
+          <button
+            className="py-2 px-16 mb-1 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+            onClick={() => mintNFT()}
+          >
+            Buy
+          </button>
         </div>
-
-        <button
-          className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => createAccount()}
-          disabled={nfts?.length === 0 || selectedNFT === -1}
-        >
-          Create Token Bound Account
-        </button>
-        <h1 className="text-center mb-5">
-          <span className="block text-3xl mb-2">Your Food NFTs</span>
-        </h1>
-
-        <div className="flex">
-          {foodNfts?.map((n, index) => (
-            <div
-              key={index}
-              className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
-              style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
-              onClick={() => setSelectNFT(index)}
-            >
-              {n.toString()}
-            </div>
-          ))}
-        </div>
-        <h1 className="text-center mb-5">
-          <span className="block text-2xl mb-2">Buy a NFT</span>
-        </h1>
-
-        <button
-          className="py-2 px-16 mb-1 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => mintNFT()}
-        >
-          Buy
-        </button>
       </div>
-    </div>
+    </>
   );
 };
 

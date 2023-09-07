@@ -90,7 +90,7 @@ export const Board = () => {
       <div>
         <div className="grid lg:grid-cols-2 gap-8 flex-grow">
           <div>
-            <p>{address}</p>
+            <h2 className="text-2xl">Token Bound Account</h2>
             <p>{tbaAddress}</p>
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
@@ -128,7 +128,7 @@ export const Board = () => {
             <p>{(lettuceAmount?.toString() as any) / 10 ** 18} Lettuce</p>
             <p>{(tomatoAmount?.toString() as any) / 10 ** 18} Tomato</p>
           </div>
-          <div className="relative mt-3" style={{ width: "450px", height: "600px" }}>
+          <div className="relative mt-3 bg-green-300" style={{ width: "530px", height: "530px" }}>
             {gridData &&
               gridData.map((item, index) => (
                 <div

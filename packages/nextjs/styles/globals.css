@@ -155,7 +155,7 @@ grid-1 {
 
 .track {
   position: absolute;
-  top: -36px;
-  right: 168px;
+  top: -35px;
+  right: 246px;
   transform: rotate(45deg);
 }
