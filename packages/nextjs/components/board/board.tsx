@@ -90,8 +90,8 @@ export const Board = () => {
       <div>
         <div className="grid lg:grid-cols-2 gap-8 flex-grow">
           <div>
-            <h2 className="text-2xl">Token Bound Account</h2>
-            <p>{tbaAddress}</p>
+            <h2 className="text-2xl mb-0">Your Token Bound Account</h2>
+            <p className="mt-0">{tbaAddress}</p>
             <button
               className="py-2 px-16 mb-1 mt-3 mr-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
               onClick={() => roll()}
@@ -134,7 +134,7 @@ export const Board = () => {
                 <div
                   key={index}
                   className={
-                    "w-20 h-20 border border-gray-300 font-bold bg-stone-200 z-10" + " " + BOARD_STYLES[index] ||
+                    "w-20 h-20 border border-gray-300 font-bold bg-stone-200 relative z-10" + " " + BOARD_STYLES[index] ||
                     "grid-1"
                   }
                 >
@@ -142,6 +142,7 @@ export const Board = () => {
                   {you?.toString() === item.id.toString() && (
                     <Image className="chef" src="/assets/chef.png" width={40} height={40} alt="Chef" />
                   )}
+                  {item.typeGrid === "Stove" && <img src="/assets/stove.png" alt="Stove" />}
                 </div>
               ))}
             <Image className="track" src="/assets/track.png" width={45} height={200} alt="Track" />

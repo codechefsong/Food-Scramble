@@ -39,7 +39,7 @@ contract FoodScramble {
     tomato = CoinToken(_tomatoAddress);
     hamburger = FoodNFT(_hamburgerAddress);
 
-    grid.push(Box(0, "Home", 99, 0));
+    grid.push(Box(0, "Stove", 99, 0));
 
     for (uint256 id = 1; id < 5; id++) {
       grid.push(Box(id, "Bread", 0, 0));
@@ -51,7 +51,9 @@ contract FoodScramble {
       grid.push(Box(id, "Meat", 1, 0));
     }
 
-    for (uint256 id = 10; id < 15; id++) {
+     grid.push(Box(10, "Stove", 99, 0));
+
+    for (uint256 id = 11; id < 15; id++) {
       grid.push(Box(id, "Lettuce", 2, 0));
     }
 
