@@ -118,12 +118,6 @@ contract FoodScramble {
     else if (currentSpot.ingredientType == 2)lettuce.mint(tba, 1 * 10 ** 18);
     else if (currentSpot.ingredientType == 3)tomato.mint(tba, 1 * 10 ** 18);
 
-    // for testing
-    bread.mint(tba, 1 * 10 ** 18);
-    meat.mint(tba, 1 * 10 ** 18);
-    lettuce.mint(tba, 1 * 10 ** 18);
-    tomato.mint(tba, 1 * 10 ** 18);
-
     canBuy[tba] = false;
   }
 
@@ -158,6 +152,17 @@ contract FoodScramble {
 
     hamburger.mintFood(tba, "h");
   }
+
+  function faucets() public {
+    address tba = tbaList[msg.sender];
+
+    // for testing
+    bread.mint(tba, 1 * 10 ** 18);
+    meat.mint(tba, 1 * 10 ** 18);
+    lettuce.mint(tba, 1 * 10 ** 18);
+    tomato.mint(tba, 1 * 10 ** 18);
+  }
+
 
   // Modifier: used to define a set of rules that must be met before or after a function is executed
   // Check the withdraw() function

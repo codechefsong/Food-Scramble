@@ -61,7 +61,7 @@ const Marketplace: NextPage = () => {
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
 
-      <div className="flex items-center flex-col flex-grow pt-7">
+      <div className="grid lg:grid-cols-2 gap-8 flex-grow mt-10 px-20">
         <div className="px-5">
           <h1 className="text-center mb-5">
             <span className="block text-3xl mb-2">Select your NFTs</span>
@@ -88,6 +88,20 @@ const Marketplace: NextPage = () => {
             Create Token Bound Account
           </button>
           <h1 className="text-center mb-5">
+            <span className="block text-2xl mb-2">Buy a NFT</span>
+          </h1>
+
+          <Image className="ml-60" src="/assets/chef.png" width={80} height={80} alt="Chef" />
+
+          <button
+            className="py-2 px-16 mb-1 mt-6 ml-52 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+            onClick={() => mintNFT()}
+          >
+            Buy
+          </button>
+        </div>
+        <div>
+          <h1 className="text-center mb-5">
             <span className="block text-3xl mb-2">Your Food NFTs</span>
           </h1>
 
@@ -101,16 +115,6 @@ const Marketplace: NextPage = () => {
               </div>
             ))}
           </div>
-          <h1 className="text-center mb-5">
-            <span className="block text-2xl mb-2">Buy a NFT</span>
-          </h1>
-
-          <button
-            className="py-2 px-16 mb-1 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-            onClick={() => mintNFT()}
-          >
-            Buy
-          </button>
         </div>
       </div>
     </>

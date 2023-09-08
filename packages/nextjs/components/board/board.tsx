@@ -134,15 +134,16 @@ export const Board = () => {
                 <div
                   key={index}
                   className={
-                    "w-20 h-20 border border-gray-300 font-bold bg-stone-200 relative z-10" + " " + BOARD_STYLES[index] ||
-                    "grid-1"
+                    "w-20 h-20 border border-gray-300 font-bold bg-stone-200 relative z-10" +
+                      " " +
+                      BOARD_STYLES[index] || "grid-1"
                   }
                 >
                   {item.typeGrid}
                   {you?.toString() === item.id.toString() && (
                     <Image className="chef" src="/assets/chef.png" width={40} height={40} alt="Chef" />
                   )}
-                  {item.typeGrid === "Stove" && <img src="/assets/stove.png" alt="Stove" />}
+                  {item.typeGrid === "Stove" && <Image src="/assets/stove.png" width={40} height={40} alt="Stove" />}
                 </div>
               ))}
             <Image className="track" src="/assets/track.png" width={45} height={200} alt="Track" />
